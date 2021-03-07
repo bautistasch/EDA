@@ -22,7 +22,7 @@ typedef struct
 {
     tipoDeArgumento_t tipoDeArgumento;
     errorStates_t errorState;
-    struct{
+    union{
         char parametro[STR_SIZE];
         char clave[STR_SIZE];
     };
@@ -34,13 +34,13 @@ int main()
 {
     userDataInput myData[MAX_DATA];
 
-    char * argv[] = {"./myProgram","-div", "3", "param1", "param2", "param3", "-sum", "2", "-div", "-4", "-", "2"};
+    char * argv[] = {"./myProgram","-div", "3", "param1", "param2", "param3", "-sum", "2", "-div", "-4", "-res", "2"};
     int argc = sizeof(argv)/sizeof(char *);
 
     for (int i = 0; i < MAX_DATA; i++)
     {
         myData[i].tipoDeArgumento = VOID;
-        myData[i].tipoDeArgumento = NO_ERROR;
+        myData[i].errorState = NO_ERROR;
     }
     int state = parseCmdLine(argc, argv, &parseCallback, myData );
     if( state != OK)
@@ -64,7 +64,7 @@ int main()
         {
             if(myData[i].errorState == DATA_OVERFLOW || myData[i].errorState == WRONG_ARG )
             {
-                printf("ERROR DE INPUT\n");
+                printf("ERROR DE INPUT %d\n", i);
             }
             else if(myData[i].tipoDeArgumento == OPCION)
             {
