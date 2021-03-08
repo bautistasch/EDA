@@ -1,13 +1,29 @@
+/***************************************************************************//**
+  @file     main.c
+  @author   Grupo7
+ ******************************************************************************/
+
+ /*******************************************************************************
+ * INCLUDE HEADER FILES
+ ******************************************************************************/
+ 
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
+#include <stdlib.h>
 #include "parseArg.h"
 
+/*******************************************************************************
+ * CONSTANT AND MACRO DEFINITIONS USING #DEFINE
+ ******************************************************************************/
 
 #define MAX_DATA  40    // Max size of the auxiliary matrix 
 #define STR_SIZE  40    
 
 #define MAX_MATRIX 30
+
+/*******************************************************************************
+ * ENUMERATIONS AND STRUCTURES AND TYPEDEFS
+ ******************************************************************************/
 
 enum{OK = 0, ERROR_1, ERROR_2, ERROR_CALLBACK}; // enums that belongs to the callback
 enum{STATE_0, STATE_1};
@@ -15,7 +31,6 @@ enum{STATE_0, STATE_1};
 
 typedef enum{NO_ERROR, DATA_OVERFLOW, WRONG_ARG} errorStates_t;    // calback variables 
 typedef enum{VOID, PARAMETRO, OPCION} tipoDeArgumento_t; 
-
 
 typedef struct 
 {
@@ -28,7 +43,17 @@ typedef struct
     int valor;
 }userDataInput_t;
 
-int parseCallback(char * key, char * value, void * userData);
+/*******************************************************************************
+ * FUNCTION PROTOTYPES FOR PRIVATE FUNCTIONS WITH FILE LEVEL SCOPE
+ ******************************************************************************/
+
+static int parseCallback(char * key, char * value, void * userData);
+
+/*******************************************************************************
+ *******************************************************************************
+                        LOCAL FUNCTION DEFINITIONS
+ *******************************************************************************
+ ******************************************************************************/
 
 int main()
 {
@@ -114,7 +139,7 @@ int main()
 }
 
 
-int parseCallback(char * key, char * value, void * userData)
+static int parseCallback(char * key, char * value, void * userData)
 {
     userDataInput_t * pUserData = userData;
     int error = 0;
